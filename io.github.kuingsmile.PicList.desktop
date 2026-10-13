@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=PicList
+Comment=An image upload and cloud storage management tool
+Exec=piclist %U
+Terminal=false
+Type=Application
+Icon=io.github.kuingsmile.PicList
+StartupWMClass=PicList
+Categories=Utility;Graphics;

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>io.github.kuingsmile.PicList</id>
+  <name>PicList</name>
+  <summary>An image upload and cloud storage management tool</summary>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>MIT</project_license>
+  <description>
+    <p>
+      PicList is an efficient and open-source cloud storage and image hosting management desktop application based on PicGo.
+    </p>
+    <p>Features include:</p>
+    <ul>
+      <li>Support for multiple cloud storage providers (S3, Aliyun OSS, Tencent COS, Qiniu, Upyun, WebDAV, etc.)</li>
+      <li>Automatic image compression, watermarking, and format conversion</li>
+      <li>Gallery management and cloud file exploration</li>
+      <li>Customizable upload keybindings and clipboard watching</li>
+    </ul>
+  </description>
+  <launchable type="desktop-id">io.github.kuingsmile.PicList.desktop</launchable>
+  <url type="homepage">https://piclist.cn</url>
+  <url type="bugtracker">https://github.com/Kuingsmile/PicList/issues</url>
+  <url type="vcs-browser">https://github.com/Kuingsmile/PicList</url>
+  <developer_name>Kuingsmile</developer_name>
+  <releases>
+    <release version="3.5.0" date="2026-06-14"/>
+  </releases>
+  <content_rating type="oars-1.1"/>
+</component>

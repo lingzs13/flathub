@@ -1,0 +1,72 @@
+app-id: io.github.kuingsmile.PicList
+runtime: org.freedesktop.Platform
+runtime-version: '24.08'
+sdk: org.freedesktop.Sdk
+base: org.electronjs.Electron2.BaseApp
+base-version: '24.08'
+command: piclist
+separate-locales: false
+
+finish-args:
+  - --share=ipc
+  - --share=network
+  - --socket=wayland
+  - --socket=fallback-x11
+  - --device=dri
+  - --filesystem=xdg-download
+  - --filesystem=xdg-pictures
+  - --talk-name=org.freedesktop.Notifications
+  - --talk-name=org.kde.StatusNotifierWatcher
+  - --talk-name=com.canonical.AppMenu.Registrar
+  - --talk-name=com.canonical.AppMenu.Registrar.*
+
+modules:
+  - name: piclist
+    buildsystem: simple
+    build-commands:
+      - bsdtar -xf piclist.deb
+      - bsdtar -xf data.tar.xz
+      - mv opt/PicList ${FLATPAK_DEST}/PicList
+      - install -Dvm644 ${FLATPAK_ID}.png ${FLATPAK_DEST}/share/icons/hicolor/512x512/apps/${FLATPAK_ID}.png
+      - install -Dvm644 ${FLATPAK_ID}.desktop ${FLATPAK_DEST}/share/applications/${FLATPAK_ID}.desktop
+      - install -Dvm644 ${FLATPAK_ID}.metainfo.xml ${FLATPAK_DEST}/share/metainfo/${FLATPAK_ID}.metainfo.xml
+      - install -Dvm755 piclist.sh ${FLATPAK_DEST}/bin/piclist
+    sources:
+      - type: file
+        dest-filename: piclist.deb
+        only-arches:
+          - x86_64
+        url: https://github.com/Kuingsmile/PicList/releases/download/v3.5.0/PicList-3.5.0-amd64.deb
+        sha256: 301cd66712065643ff5fca5b001b4c0c399dfd55a382f59168a047d5c51e64e6
+        x-checker-data:
+          type: json
+          url: https://api.github.com/repos/Kuingsmile/PicList/releases/latest
+          version-query: .tag_name | sub("^v"; "")
+          url-query: .assets[] | select(.name == "PicList-" + $version + "-amd64.deb") | .browser_download_url
+          is-main-source: true
+
+      - type: file
+        dest-filename: piclist.deb
+        only-arches:
+          - aarch64
+        url: https://github.com/Kuingsmile/PicList/releases/download/v3.5.0/PicList-3.5.0-arm64.deb
+        sha256: a2d202a4f53003255f274c810f7d89f6dbb2607fe0be6befede71b6a5cec48dc
+        x-checker-data:
+          type: json
+          url: https://api.github.com/repos/Kuingsmile/PicList/releases/latest
+          version-query: .tag_name | sub("^v"; "")
+          url-query: .assets[] | select(.name == "PicList-" + $version + "-arm64.deb") | .browser_download_url
+
+      - type: script
+        dest-filename: piclist.sh
+        commands:
+          - exec zypak-wrapper /app/PicList/PicList "$@"
+
+      - type: file
+        path: io.github.kuingsmile.PicList.png
+
+      - type: file
+        path: io.github.kuingsmile.PicList.desktop
+
+      - type: file
+        path: io.github.kuingsmile.PicList.metainfo.xml
